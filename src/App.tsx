@@ -8,7 +8,6 @@ import * as postService from './api/todos';
 import classNames from 'classnames';
 
 export const App: React.FC = () => {
-
   const [todosList, setTodosList] = useState<Todo[]>([]);
   const [value, setValue] = useState<string>('');
   const [filter, setFilter] = useState<string>('all');
@@ -34,15 +33,16 @@ export const App: React.FC = () => {
   }, [editField]);
 
   useEffect(() => {
-    if(loadingError === null){
+    if (loadingError === null) {
       return;
     }
 
     const timer = setTimeout(() => {
       setLoadingError(null);
-    },3000)
-    return () =>  clearTimeout(timer);
-  },[loadingError])
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [loadingError]);
 
   if (!USER_ID) {
     return <UserWarning />;
@@ -292,7 +292,7 @@ export const App: React.FC = () => {
         {todosList.length > 0 && (
           <footer className="todoapp__footer" data-cy="Footer">
             <span className="todo-count" data-cy="TodosCounter">
-              {todosList.length} items left
+              {todosList.filter(item => !item.completed).length} items left
             </span>
 
             {/* Active link should have the 'selected' class */}
