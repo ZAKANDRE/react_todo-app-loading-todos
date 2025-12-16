@@ -8,7 +8,7 @@ import * as postService from './api/todos';
 import classNames from 'classnames';
 
 export const App: React.FC = () => {
-  // ✅ ВСЕ Hooks СВЕРХУ, ДО условия!
+
   const [todosList, setTodosList] = useState<Todo[]>([]);
   const [value, setValue] = useState<string>('');
   const [filter, setFilter] = useState<string>('all');
@@ -19,7 +19,6 @@ export const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingError, setLoadingError] = useState<string | null>(null);
 
-  // ✅ useEffect перед условием
   useEffect(() => {
     getTodos()
       .then(setTodosList)
@@ -34,7 +33,17 @@ export const App: React.FC = () => {
     }
   }, [editField]);
 
-  // ✅ Проверка USER_ID ПОСЛЕ всех hooks
+  useEffect(() => {
+    if(loadingError === null){
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setLoadingError(null);
+    },3000)
+    return () =>  clearTimeout(timer);
+  },[loadingError])
+
   if (!USER_ID) {
     return <UserWarning />;
   }
@@ -199,7 +208,8 @@ export const App: React.FC = () => {
                 <input
                   data-cy="TodoStatus"
                   type="checkbox"
-                  className="todo__status "
+                  className="todo__status"
+                  checked={item.completed}
                   onChange={() =>
                     updateTodo({ ...item, completed: !item.completed })
                   }
