@@ -13,6 +13,19 @@ export const Header = ({
   onAdd,
   onError,
 }: HeaderType) => {
+  const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (onVal === '') {
+      onError('Title should not be empty');
+    } else {
+      onAdd({
+        completed: false,
+        title: onVal,
+        userId: USER_ID,
+      });
+    }
+  };
+
   return (
     <header className="todoapp__header">
       {/* this button should have `active` class only if all todos are completed */}
@@ -43,16 +56,7 @@ export const Header = ({
       {/* Add a todo on form submit */}
       <form
         onSubmit={e => {
-          e.preventDefault();
-          if (onVal === '') {
-            onError('Title should not be empty');
-          } else {
-            onAdd({
-              completed: false,
-              title: onVal,
-              userId: USER_ID,
-            });
-          }
+          onHandleSubmit(e);
         }}
       >
         <input

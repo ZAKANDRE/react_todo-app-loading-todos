@@ -8,8 +8,8 @@ import { FilterBtn } from './types/Filter';
 import * as postService from './api/todos';
 import classNames from 'classnames';
 import { Header } from './components/Header/Header';
-import { Main } from './components/Main/Main';
-import { Footer } from './components/Footer/Footer';
+import { MainList } from './components/MainList/MainList';
+import { FooterList } from './components/FooterList/FooterList';
 
 export const App: React.FC = () => {
   const [todosList, setTodosList] = useState<Todo[]>([]);
@@ -156,7 +156,7 @@ export const App: React.FC = () => {
           onAllItems={allCompleted}
         />
 
-        <Main
+        <MainList
           shownTodos={displayedTodos}
           onUpdate={updateTodo}
           editFieldVal={editField}
@@ -171,7 +171,7 @@ export const App: React.FC = () => {
           inputMainFocus={inputRef}
         />
 
-        <Footer
+        <FooterList
           todosItemsList={todosList}
           filtered={filter}
           onFiltred={setFilter}

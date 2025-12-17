@@ -1,6 +1,6 @@
 import type { Todo } from './Todo';
 
-export type MainType = {
+export type MainListType = {
   shownTodos: Todo[];
   onUpdate: (value: Todo) => void;
   editFieldVal: number | null;
